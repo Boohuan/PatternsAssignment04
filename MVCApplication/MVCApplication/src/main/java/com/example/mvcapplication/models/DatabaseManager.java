@@ -1,5 +1,6 @@
 package com.example.mvcapplication.models;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -7,10 +8,14 @@ import java.sql.*;
 
 public class DatabaseManager {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/hr";
-    private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String URL = "jdbc:mysql://localhost:3306/hr"; //the database
+    private static final String USER = "root"; //username
+    private static final String PASSWORD = ""; //password
 
+    /**
+     * Returns everything in the employee table
+     * @return
+     */
     public static ObservableList<Employee> getAllEmployees() {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
 
@@ -35,6 +40,11 @@ public class DatabaseManager {
         return employees;
     }
 
+    /**
+     * Returns the first name of every employee in the employee table
+     * @param firstName
+     * @return
+     */
     public static ObservableList<Employee> getEmployeeByFirstName(String firstName) {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
 
@@ -58,5 +68,25 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return employees;
+    }
+
+    /**
+     * Gets all employee last names from the employee table
+     * @param lastName
+     * @return
+     */
+    public static ObservableList<Employee> getEmployeeLastName(String lastName){
+        ObservableList<Employee> employees = FXCollections.observableArrayList();
+            String query = "SELECT * FROM employees WHERE Last_Name = '" + lastName + "'";
+            try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            Statement stat = conn.createStatement();
+            ResultSet set = stat.executeQuery(query)) {
+                while(set.next()) {
+                    employees.add(new Employee(set.getInt("Id"), set.getString("First_Name"), set.getString("Last_Name"), set.getDouble("Salary"), set.getInt("Department")));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return employees;
     }
 }
