@@ -89,4 +89,57 @@ public class DatabaseManager {
             }
             return employees;
     }
+
+    /**
+     * Returns all projects from the Project table
+     * @return
+     */
+    public static ObservableList<Projects> getAllProjects(){
+        ObservableList<Projects> projects = FXCollections.observableArrayList();
+        String query = "SELECT * FROM projects";
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        Statement stat = conn.createStatement();
+        ResultSet set = stat.executeQuery(query)){
+            while(set.next()){
+                projects.add(new Projects(set.getInt("id"), set.getString("projectName"), set.getString("description"), set.getInt("departmentId")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); //maybe add logger if time
+        }
+        return projects;
+    }
+
+    /**
+     * Return all departments from the Department table
+     * @return
+     */
+    public static ObservableList<Department> getAllDepartments(){
+        ObservableList<Department> departments = FXCollections.observableArrayList();
+        String query = "SELECT * FROM department";
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        Statement stat = conn.createStatement();
+        ResultSet set = stat.executeQuery(query)){
+            while(set.next()){
+                departments.add(new Department(set.getInt("id"), set.getString("departmentName")));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return departments;
+    }
+
+    public static ObservableList<EmployeeProjects> getAllEmployeeProjects(){
+        ObservableList<EmployeeProjects> employeeProjects = FXCollections.observableArrayList();
+        String query = "SELECT projects.id, projects.projectName FROM projects JOIN employees ON projects.id = employees.id JOIN department ON employees.departmentId = department.id"; //fix
+        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        Statement stat = conn.createStatement();
+        ResultSet set = stat.executeQuery(query)){
+            while(set.next()){
+                employeeProjects.add(new EmployeeProjects(set.getInt("projectId"), set.getInt("employeeId"), set.getString("projectName"), set.getString("departmentName")));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return employeeProjects;
+    }
 }

@@ -1,7 +1,8 @@
 package com.example.mvcapplication.models;
 
-import com.mysql.cj.conf.StringProperty;
-import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Projects {
     private final IntegerProperty id;
@@ -9,11 +10,11 @@ public class Projects {
     private final StringProperty description;
     private final IntegerProperty departmentId;
 
-    public Projects(IntegerProperty id, StringProperty projectName, StringProperty description, IntegerProperty departmentId) {
-        this.id = id;
-        this.projectName = projectName;
-        this.description = description;
-        this.departmentId = departmentId;
+    public Projects(int id, String projectName, String description, int departmentId) {
+        this.id = new SimpleIntegerProperty(id);
+        this.projectName = new SimpleStringProperty(projectName);
+        this.description = new SimpleStringProperty(description);
+        this.departmentId = new SimpleIntegerProperty(departmentId);
     }
 
     public IntegerProperty idProperty(){

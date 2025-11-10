@@ -14,7 +14,11 @@ public class EmployeeController {
     public ObservableList<Employee> getEmployees() {
         return DatabaseManager.getAllEmployees();
     }
-    public ObservableList<Employee> getEmployeesByFirstName(String name) {
-        return DatabaseManager.getEmployeeByFirstName(name);
+    public ObservableList<Employee> getEmployeesByFirstName(String firstName) {
+        return DatabaseManager.getEmployeeByFirstName(firstName);
+    }
+
+    public ObservableList<Employee> getEmployeesByLastName(String lastName){
+        return DatabaseManager.getEmployeeLastName(lastName);
     }
 }
