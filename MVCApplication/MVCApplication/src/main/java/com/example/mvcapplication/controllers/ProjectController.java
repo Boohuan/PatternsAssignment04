@@ -6,11 +6,11 @@ import javafx.collections.ObservableList;
 
 public class ProjectController {
 
-    public ProjectController(){
+    public ProjectController() {
 
     }
 
-    public ObservableList<Projects> getProjects(){
+    public ObservableList<Projects> getProjects() {
         return DatabaseManager.getAllProjects();
     }
 }

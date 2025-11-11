@@ -17,19 +17,19 @@ public class Projects {
         this.departmentId = new SimpleIntegerProperty(departmentId);
     }
 
-    public IntegerProperty idProperty(){
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public StringProperty projectNameProperty(){
+    public StringProperty projectNameProperty() {
         return projectName;
     }
 
-    public StringProperty descriptionProperty(){
+    public StringProperty descriptionProperty() {
         return description;
     }
 
-    public IntegerProperty departmentIdProperty(){
+    public IntegerProperty departmentIdProperty() {
         return departmentId;
     }
 }

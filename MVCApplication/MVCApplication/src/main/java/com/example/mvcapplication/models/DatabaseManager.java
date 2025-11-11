@@ -128,14 +128,14 @@ public class DatabaseManager {
         return departments;
     }
 
-    public static ObservableList<EmployeeProjects> getAllEmployeeProjects(){
-        ObservableList<EmployeeProjects> employeeProjects = FXCollections.observableArrayList();
+    public static ObservableList<EmployeeProject> getAllEmployeeProjects(){
+        ObservableList<EmployeeProject> employeeProjects = FXCollections.observableArrayList();
         String query = "SELECT projects.id, projects.projectName FROM projects JOIN employees ON projects.id = employees.id JOIN department ON employees.departmentId = department.id"; //fix
         try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
         Statement stat = conn.createStatement();
         ResultSet set = stat.executeQuery(query)){
             while(set.next()){
-                employeeProjects.add(new EmployeeProjects(set.getInt("projectId"), set.getInt("employeeId"), set.getString("projectName"), set.getString("departmentName")));
+                employeeProjects.add(new EmployeeProject(set.getInt("projectId"), set.getInt("employeeId"), set.getString("projectName"), set.getString("departmentName")));
             }
         }catch(SQLException e){
             e.printStackTrace();

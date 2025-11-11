@@ -13,11 +13,11 @@ public class Department {
         this.departmentName = new SimpleStringProperty(departmentName);
     }
 
-    public IntegerProperty idProperty(){
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public StringProperty departmentNameProperty(){
+    public StringProperty departmentNameProperty() {
         return departmentName;
     }
 
