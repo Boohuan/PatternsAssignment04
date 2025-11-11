@@ -26,6 +26,7 @@ public class EmployeeView extends VBox {
         Label label = new Label("First Name:");
         TextField nameField = new TextField();
         Button searchButton = new Button("Search");
+        Button showDepartmentsButton = new Button("Departments Window"); //to open a new window
 
         searchButton.setOnAction(e -> {
             String name = nameField.getText().trim();
