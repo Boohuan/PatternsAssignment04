@@ -19,18 +19,18 @@ public class DatabaseManager {
     public static ObservableList<Employee> getAllEmployees() {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
 
-        String query = "SELECT * FROM employees";
+        String query = "SELECT * FROM employee";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
                 employees.add(new Employee(
-                        rs.getInt("Id"),
+                        rs.getInt("EmployeeID"),
                         rs.getString("First_Name"),
                         rs.getString("Last_Name"),
                         rs.getDouble("Salary"),
-                        rs.getInt("Department")
+                        rs.getInt("DepartmentId")
                 ));
             }
 
@@ -48,7 +48,7 @@ public class DatabaseManager {
     public static ObservableList<Employee> getEmployeeByFirstName(String firstName) {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
 
-        String query = "SELECT * FROM employees WHERE First_Name = '" + firstName + "'";
+        String query = "SELECT * FROM employee WHERE First_Name = '" + firstName + "'";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement stmt = conn.createStatement();
@@ -56,11 +56,11 @@ public class DatabaseManager {
 
             while (rs.next()) {
                 employees.add(new Employee(
-                        rs.getInt("Id"),
+                        rs.getInt("EmployeeId"),
                         rs.getString("First_Name"),
                         rs.getString("Last_Name"),
                         rs.getDouble("Salary"),
-                        rs.getInt("Department")
+                        rs.getInt("DepartmentId")
                 ));
             }
 
@@ -82,7 +82,7 @@ public class DatabaseManager {
             Statement stat = conn.createStatement();
             ResultSet set = stat.executeQuery(query)) {
                 while(set.next()) {
-                    employees.add(new Employee(set.getInt("Id"), set.getString("First_Name"), set.getString("Last_Name"), set.getDouble("Salary"), set.getInt("Department")));
+                    employees.add(new Employee(set.getInt("EmployeeId"), set.getString("First_Name"), set.getString("Last_Name"), set.getDouble("Salary"), set.getInt("DepartmentId")));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -101,7 +101,7 @@ public class DatabaseManager {
         Statement stat = conn.createStatement();
         ResultSet set = stat.executeQuery(query)){
             while(set.next()){
-                projects.add(new Projects(set.getInt("id"), set.getString("projectName"), set.getString("description"), set.getInt("departmentId")));
+                projects.add(new Projects(set.getInt("ProjectID"), set.getString("ProjectName"), set.getString("ProjectDescription"), set.getInt("departmentId")));
             }
         } catch (SQLException e) {
             e.printStackTrace(); //maybe add logger if time
@@ -120,7 +120,7 @@ public class DatabaseManager {
         Statement stat = conn.createStatement();
         ResultSet set = stat.executeQuery(query)){
             while(set.next()){
-                departments.add(new Department(set.getInt("id"), set.getString("departmentName")));
+                departments.add(new Department(set.getInt("DepartmentId"), set.getString("DepartmentName")));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -130,12 +130,12 @@ public class DatabaseManager {
 
     public static ObservableList<EmployeeProjects> getAllEmployeeProjects(){
         ObservableList<EmployeeProjects> employeeProjects = FXCollections.observableArrayList();
-        String query = "SELECT projects.id, projects.projectName FROM projects JOIN employees ON projects.id = employees.id JOIN department ON employees.departmentId = department.id"; //fix
+        String query = "SELECT E.First_Name, E.Last_Name, E.Salary, P.ProjectName, P.ProjectDescription FROM Employee AS E INNER JOIN Projects AS P ON E.ProjectID = P.ProjectID;"; //fix
         try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
         Statement stat = conn.createStatement();
         ResultSet set = stat.executeQuery(query)){
             while(set.next()){
-                employeeProjects.add(new EmployeeProjects(set.getInt("projectId"), set.getInt("employeeId"), set.getString("projectName"), set.getString("departmentName")));
+                employeeProjects.add(new EmployeeProjects(set.getInt("ProjectID"), set.getInt("EmployeeId"), set.getString("ProjectName"), set.getString("DepartmentName")));
             }
         }catch(SQLException e){
             e.printStackTrace();
