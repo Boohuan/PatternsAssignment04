@@ -12,9 +12,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         EmployeeController controller = new EmployeeController();
-        EmployeeView view = new EmployeeView(controller);
+        EmployeeView employeeView = new EmployeeView(controller);
 
-        Scene scene = new Scene(view, 400, 300);
+        Scene scene = new Scene(employeeView, 400, 300);
         stage.setTitle("Employee Table (MVC)");
         stage.setScene(scene);
         stage.show();
