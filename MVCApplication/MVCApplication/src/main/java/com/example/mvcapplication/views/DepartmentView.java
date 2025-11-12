@@ -1,61 +1,85 @@
 package com.example.mvcapplication.views;
 
 import com.example.mvcapplication.controllers.DepartmentController;
+import com.example.mvcapplication.controllers.EmployeeController;
+import com.example.mvcapplication.controllers.EmployeeProjectController;
+import com.example.mvcapplication.controllers.ProjectController;
 import com.example.mvcapplication.models.Department;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.stage.Stage;
-import java.io.IOException;
+import javafx.scene.layout.VBox;
+import java.util.List;
 
-public class DepartmentView {
-
-    @FXML
-    private Button employeeTable;
-    @FXML
-    private Button projectsTable;
-    @FXML
-    private Button activeProjects;
-    @FXML
-    private TableView<Department> table;
-    @FXML
-    private TableColumn<Department, String> id;
-    @FXML
-    private TableColumn<Department, String> departmentName;
-    private final DepartmentController controller;
+public class DepartmentView extends AbstractView<Department, DepartmentController> {
 
     public DepartmentView(DepartmentController controller) {
-        this.controller = controller;
+        super(controller);
+
+        createTable(List.of("ID", "Department Name"), List.of("id", "departmentName"));
+        bindTableData(controller.getDepartments());
+
+        //go to employee table
+        VBox employeeWindow = new EmployeeView(new EmployeeController());
+        Button employee = navigation("Employee Table", "Employees", employeeWindow);
+
+        //go to projects table
+        VBox projectsWindow = new ProjectsView(new ProjectController());
+        Button projects = navigation("Project Table", "Projects", projectsWindow);
+
+        //go to employee projects table
+        VBox activeProjWindow = new EmployeeProjectView(new EmployeeProjectController());
+        Button activeProj = navigation("Active Projects Table", "Employee Projects", activeProjWindow);
+
+        this.getChildren().addAll(tableView);
     }
 
-    @FXML
-    protected void  showProjectsWindowButton(Stage stage) throws IOException {
-        FXMLLoader fxml = new FXMLLoader(getClass().getResource("Project Window.fxml"));
-        stage.setTitle("Projects");
-        Stage load = fxml.load();
-        stage.show();
+    //keep here in case this goes wrong
+    /*private VBox loadNewWindow() {
+        VBox pane = new VBox();
+        Button employee = new Button("Employees");
+        Button projects = new Button("Projects");
+        Button activeProj = new Button("Active Projects");
+        employee.setOnAction(e -> {
+            VBox employeeWindow = new EmployeeView(new EmployeeController());
+            Scene scene = new Scene(employeeWindow, 600, 400);
+            Stage stage = new Stage();
+            stage.setTitle("Employees");
+            stage.setScene(scene);
+            stage.show();
+            closeCurrentWindowOnOpen(e);
+        });
+        projects.setOnAction( e -> {
+            VBox projectsWindow = new ProjectsView(new ProjectController());
+            Scene scene = new Scene(projectsWindow, 600, 400);
+            Stage stage = new Stage();
+            stage.setTitle("Projects");
+            stage.setScene(scene);
+            stage.show();
+            closeCurrentWindowOnOpen(e);
+        });
+        activeProj.setOnAction(e -> {
+            VBox activeProjWindow = new EmployeeProjectView(new EmployeeProjectController());
+            Scene scene = new Scene(activeProjWindow, 600, 400);
+            Stage stage = new Stage();
+            stage.setTitle("Employee Projects");
+            stage.setScene(scene);
+            stage.show();
+            closeCurrentWindowOnOpen(e);
+        });
+        pane.getChildren().addAll(employee, projects, activeProj);
+        return pane;
     }
 
-    @FXML
-    protected void showEmployeeWindowButton(Stage stage) throws IOException{
-        FXMLLoader fxml = new FXMLLoader(getClass().getResource("Project Window.fxml")); //discuss how this will work
-        stage.setTitle("Employees");
-        Stage load = fxml.load();
-        stage.show();
+
+    private void createTable() {
+        TableColumn<Department, String> departmentId = new TableColumn<>("ID");
+        departmentId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Department, String> departmentName = new TableColumn<>("Department Name");
+        departmentName.setCellValueFactory(new PropertyValueFactory<>("departmentName"));
+        tableView.getColumns().addAll(departmentId, departmentName);
     }
 
-    @FXML
-    protected void showActiveProjectsWindowButton(Stage stage) throws IOException{
-        FXMLLoader fxml = new FXMLLoader(getClass().getResource("Employee-projects window.fxml"));
-        stage.setTitle("Projects");
-        Stage load = fxml.load();
-        stage.show();
-    }
+    private void bindTableData() {
+        tableView.setItems(controller.getDepartments());
+    }*/
 
-    @FXML
-    protected void tableOnLoad(){
-        table.setItems(controller.getDepartments());
-    }
 }

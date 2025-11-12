@@ -1,10 +1,12 @@
-create database hr;
-use hr;
+    CREATE DATABASE hr;
+USE hr;
 
-CREATE table Department(
-DepartmentId int auto_increment primary key, 
-DepartmentName varchar(30));
-INSERT into Department(DepartmentName) values 
+CREATE TABLE Department (
+    DepartmentId INT AUTO_INCREMENT PRIMARY KEY, 
+    DepartmentName VARCHAR(30)
+);
+
+INSERT INTO Department (DepartmentName) VALUES 
 ('Human Resources'),
 ('Finance'),
 ('Information Technology'),
@@ -16,37 +18,38 @@ INSERT into Department(DepartmentName) values
 ('Legal'),
 ('Administration');
 
-create table Employee(
-EmployeeID int auto_increment primary key,
-First_Name varchar(30),
-Last_Name varchar(30),
-Salary decimal(10,2),
-DepartmentId int,
-constraint fk_department_id foreign key (DepartmentId) references Department(DepartmentId));
-insert into Employee(First_Name, Last_Name, Salary, DepartmentId) values
-('John', 'Doe', 60000.00, 1),
-('Jane', 'Smith', 75000.00, 2),
-('Peter', 'Jones', 85000.00, 3);
-
-
-CREATE TABLE Projects(
-    ProjectID INT auto_increment PRIMARY KEY,
+CREATE TABLE Projects (
+    ProjectID INT AUTO_INCREMENT PRIMARY KEY,
     ProjectName VARCHAR(20),
-    ProjectDescription VARCHAR(50));
-insert into Projects (ProjectName, ProjectDescription) values
+    ProjectDescription VARCHAR(50)
+);
+
+ALTER TABLE Projects AUTO_INCREMENT = 100;
+
+INSERT INTO Projects (ProjectName, ProjectDescription) VALUES
 ('Onboarding', 'Employee onboarding automation system'),
 ('Budget 2025', 'Annual budget planning and forecasting'),
 ('IT Revamp', 'Upgrade internal IT infrastructure'),
 ('Ad Campaign', 'New product marketing campaign'),
 ('Sales Boost', 'CRM system to increase sales efficiency');
 
-create table EmployeeProject(
-EmployeeID int,
-ProjectID int,
-constraint fk_employee_id foreign key (EmployeeID) references Employee(EmployeeID),
-constraint fk_project_id foreign key (ProjectID) references Projects(ProjectID));
-insert into EmployeeProject(EmployeeID, ProjectID) values
-(1, 101), --fix this part
-(2, 100),
-(3, 102),
-(4, 101);
+CREATE TABLE Employee (
+    EmployeeID INT AUTO_INCREMENT PRIMARY KEY,
+    First_Name VARCHAR(30),
+    Last_Name VARCHAR(30),
+    Salary DECIMAL(10,2),
+    DepartmentId INT,
+    ProjectID INT,
+    CONSTRAINT fk_department_id FOREIGN KEY (DepartmentId) REFERENCES Department(DepartmentId),
+    CONSTRAINT fk_projects_id FOREIGN KEY (ProjectID) REFERENCES Projects(ProjectID)
+
+);
+
+ALTER TABLE Employee AUTO_INCREMENT = 100;
+
+INSERT INTO Employee (First_Name, Last_Name, Salary, DepartmentId, ProjectID) VALUES
+('John', 'Doe', 60000.00, 1, 100),
+('Jane', 'Smith', 75000.00, 2, 101),
+('Michael', 'Johnson', 80000.00, 3, 102),
+('Emily', 'Davis', 72000.00, 4, 103),
+('Daniel', 'Wilson', 68000.00, 5, 104);

@@ -14,7 +14,7 @@ public class Projects {
         this.id = new SimpleIntegerProperty(id);
         this.projectName = new SimpleStringProperty(projectName);
         this.description = new SimpleStringProperty(description);
-        this.departmentId = new SimpleIntegerProperty(departmentId);
+        this.departmentId = new SimpleIntegerProperty(departmentId); //may need to remove this
     }
 
     public IntegerProperty idProperty() {
