@@ -12,7 +12,7 @@ import java.util.List;
 public class DepartmentView extends AbstractView<Department, DepartmentController> {
 
     public DepartmentView(DepartmentController controller) {
-        super(controller);
+        super(new DepartmentController());
 
         createTable(List.of("ID", "Department Name"), List.of("id", "departmentName"));
         bindTableData(controller.getDepartments());

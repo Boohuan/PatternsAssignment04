@@ -15,7 +15,7 @@ import java.util.List;
 public class EmployeeView extends AbstractView<Employee, EmployeeController> {
 
     public EmployeeView(EmployeeController controller) {
-        super(controller);
+        super(new EmployeeController());
 
         createTable(List.of("First Name", "Last Name", "Salary"), List.of("firstName", "lastName", "salary"));
 

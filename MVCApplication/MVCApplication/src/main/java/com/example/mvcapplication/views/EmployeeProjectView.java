@@ -13,7 +13,7 @@ import java.util.List;
 public class EmployeeProjectView extends AbstractView<EmployeeProject, EmployeeProjectController> {
 
     public EmployeeProjectView(EmployeeProjectController controller) {
-        super(controller);
+        super(new EmployeeProjectController());
 
         createTable(List.of("Project ID", "Employee ID", "Project Name", "Department"), List.of("projectId", "employeeId", "projectName", "departmentName"));
         bindTableData(controller.getEmployeeProjects());

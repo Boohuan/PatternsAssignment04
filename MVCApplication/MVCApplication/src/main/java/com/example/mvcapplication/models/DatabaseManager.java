@@ -1,6 +1,5 @@
 package com.example.mvcapplication.models;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -71,26 +70,6 @@ public class DatabaseManager {
     }
 
     /**
-     * Gets all employee last names from the employee table
-     * @param lastName
-     * @return
-     */
-    public static ObservableList<Employee> getEmployeeLastName(String lastName){
-        ObservableList<Employee> employees = FXCollections.observableArrayList();
-            String query = "SELECT * FROM employees WHERE Last_Name = '" + lastName + "'";
-            try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            Statement stat = conn.createStatement();
-            ResultSet set = stat.executeQuery(query)) {
-                while(set.next()) {
-                    employees.add(new Employee(set.getInt("Id"), set.getString("First_Name"), set.getString("Last_Name"), set.getDouble("Salary"), set.getInt("Department")));
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return employees;
-    }
-
-    /**
      * Returns all projects from the Project table
      * @return
      */
@@ -128,6 +107,10 @@ public class DatabaseManager {
         return departments;
     }
 
+    /**
+     * Gets all projects worked on by employees
+     * @return
+     */
     public static ObservableList<EmployeeProject> getAllEmployeeProjects(){
         ObservableList<EmployeeProject> employeeProjects = FXCollections.observableArrayList();
         String query = "SELECT projects.id, projects.projectName FROM projects JOIN employees ON projects.id = employees.id JOIN department ON employees.departmentId = department.id"; //fix

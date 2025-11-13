@@ -4,10 +4,8 @@ import com.example.mvcapplication.controllers.DepartmentController;
 import com.example.mvcapplication.controllers.EmployeeController;
 import com.example.mvcapplication.controllers.EmployeeProjectController;
 import com.example.mvcapplication.controllers.ProjectController;
-import com.example.mvcapplication.models.Department;
 import com.example.mvcapplication.models.Projects;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -15,7 +13,7 @@ import java.util.List;
 public class ProjectsView extends AbstractView<Projects, ProjectController> {
 
     public ProjectsView(ProjectController controller) {
-        super(controller);
+        super(new ProjectController());
 
         createTable(List.of("ID", "Project Name", "Description"), List.of("id", "projectName", "description"));
         bindTableData(controller.getProjects());
