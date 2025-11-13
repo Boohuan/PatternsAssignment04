@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public abstract class AbstractView<T, C> extends VBox {
 
@@ -30,13 +31,12 @@ public abstract class AbstractView<T, C> extends VBox {
      * @param newWindow
      * @return
      */
-    protected Button navigation(String btnTitle, String windowTitle, VBox newWindow) {
+    protected Button navigation(String btnTitle, String windowTitle, Supplier<VBox> newWindow) {
         Button button = new Button(btnTitle);
         button.setOnAction(e -> {
             Stage stage = new Stage();
-            Scene scene = new Scene(newWindow, 600, 400);
             stage.setTitle(windowTitle);
-            stage.setScene(scene);
+            stage.setScene(new Scene(newWindow.get(), 400, 300)); //used a supplier to delay the creation of a new window or else it would cause stack overflows. Once we set the scene from the event, then it gets called and created.
             stage.show();
             closeCurrentWindowOnOpen(e);
         });

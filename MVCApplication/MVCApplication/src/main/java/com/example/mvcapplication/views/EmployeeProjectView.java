@@ -13,22 +13,19 @@ import java.util.List;
 public class EmployeeProjectView extends AbstractView<EmployeeProject, EmployeeProjectController> {
 
     public EmployeeProjectView(EmployeeProjectController controller) {
-        super(new EmployeeProjectController());
+        super(controller);
 
         createTable(List.of("Project ID", "Employee ID", "Project Name", "Department"), List.of("projectId", "employeeId", "projectName", "departmentName"));
         bindTableData(controller.getEmployeeProjects());
 
         //go to employee table
-        VBox employeeWindow = new EmployeeView(new EmployeeController());
-        Button employee = navigation("Employee Table", "Employees", employeeWindow);
+        Button employee = navigation("Employee Table", "Employees", () -> new EmployeeProjectView(new EmployeeProjectController()));
 
         //go to department table
-        VBox departmentWindow = new DepartmentView(new DepartmentController());
-        Button department = navigation("Department Table", "Departments", departmentWindow);
+        Button department = navigation("Department Table", "Departments", () -> new DepartmentView(new DepartmentController()));
 
         //go to projects table
-        VBox projectsWindow = new ProjectsView(new ProjectController());
-        Button projects = navigation("Project Table", "Projects", projectsWindow);
+        Button projects = navigation("Project Table", "Projects", () -> new ProjectsView(new ProjectController()));
 
         this.getChildren().addAll(tableView);
     }

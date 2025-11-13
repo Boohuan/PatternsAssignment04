@@ -12,22 +12,19 @@ import java.util.List;
 public class DepartmentView extends AbstractView<Department, DepartmentController> {
 
     public DepartmentView(DepartmentController controller) {
-        super(new DepartmentController());
+        super(controller);
 
         createTable(List.of("ID", "Department Name"), List.of("id", "departmentName"));
         bindTableData(controller.getDepartments());
 
         //go to employee table
-        VBox employeeWindow = new EmployeeView(new EmployeeController());
-        Button employee = navigation("Employee Table", "Employees", employeeWindow);
+        Button employee = navigation("Employee Table", "Employees", () -> new EmployeeView(new EmployeeController()));
 
         //go to projects table
-        VBox projectsWindow = new ProjectsView(new ProjectController());
-        Button projects = navigation("Project Table", "Projects", projectsWindow);
+        Button projects = navigation("Project Table", "Projects", () -> new ProjectsView(new ProjectController()));
 
         //go to employee projects table
-        VBox activeProjWindow = new EmployeeProjectView(new EmployeeProjectController());
-        Button activeProj = navigation("Active Projects Table", "Employee Projects", activeProjWindow);
+        Button activeProj = navigation("Active Projects Table", "Employee Projects", () -> new EmployeeProjectView(new EmployeeProjectController()));
 
         this.getChildren().addAll(tableView);
     }

@@ -99,7 +99,7 @@ public class DatabaseManager {
         Statement stat = conn.createStatement();
         ResultSet set = stat.executeQuery(query)){
             while(set.next()){
-                departments.add(new Department(set.getInt("id"), set.getString("departmentName")));
+                departments.add(new Department(set.getInt("DepartmentId"), set.getString("DepartmentName")));
             }
         }catch (SQLException e){
             e.printStackTrace();
