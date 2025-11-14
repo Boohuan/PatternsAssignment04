@@ -23,7 +23,7 @@ public class ProjectsView extends AbstractView<Projects, ProjectController> {
         Button department = navigation("Department Table", "Departments", () -> new DepartmentView(new DepartmentController()));
         //go to employee projects table
         Button activeProj = navigation("Active Projects Table", "Employee Projects", () -> new EmployeeProjectView(new EmployeeProjectController()));
-        HBox navSection = new HBox(12, employee, department, activeProj); //creates a sort of div like structure for the buttons
+        HBox navSection = navButtons(employee, department, activeProj); //creates a sort of div like structure for the buttons
         this.getChildren().addAll(tableView, navSection);
     }
 }

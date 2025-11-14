@@ -70,4 +70,10 @@ public abstract class AbstractView<T, C> extends VBox {
         ObservableList<T> ol = FXCollections.observableArrayList(data);
         tableView.setItems(ol);
     }
+
+    protected HBox navButtons(Button... buttons){
+        HBox hb = new HBox(12);
+        hb.getChildren().addAll(buttons);
+        return hb;
+    }
 }

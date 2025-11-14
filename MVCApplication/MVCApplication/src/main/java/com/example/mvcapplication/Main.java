@@ -1,8 +1,6 @@
 package com.example.mvcapplication;
 
-import com.example.mvcapplication.controllers.DepartmentController;
 import com.example.mvcapplication.controllers.EmployeeController;
-import com.example.mvcapplication.views.DepartmentView;
 import com.example.mvcapplication.views.EmployeeView;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -15,7 +13,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         EmployeeView view = new EmployeeView(new EmployeeController());
         Scene scene = new Scene(view, 600, 400);
-        stage.setTitle("Employee Table (MVC)");
+        stage.setTitle("Employees");
         stage.setScene(scene);
         stage.show();
     }

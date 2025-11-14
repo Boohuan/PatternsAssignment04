@@ -19,18 +19,18 @@ public class DatabaseManager {
     public static ObservableList<Employee> getAllEmployees() {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
 
-        String query = "SELECT * FROM employees";
+        String query = "SELECT * FROM employee";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
                 employees.add(new Employee(
-                        rs.getInt("Id"),
+                        rs.getInt("EmployeeID"),
                         rs.getString("First_Name"),
                         rs.getString("Last_Name"),
                         rs.getDouble("Salary"),
-                        rs.getInt("Department")
+                        rs.getInt("DepartmentId")
                 ));
             }
 
@@ -48,7 +48,7 @@ public class DatabaseManager {
      */
     public static ObservableList<Employee> getEmployeeByFirstName(String firstName) {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
-        String query = "SELECT * FROM employees WHERE First_Name = '" + firstName + "'";
+        String query = "SELECT * FROM employee WHERE First_Name = '" + firstName + "'";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
