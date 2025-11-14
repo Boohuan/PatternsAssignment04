@@ -2,14 +2,14 @@ package com.example.mvcapplication.models;
 
 import javafx.beans.property.*;
 
-public class EmployeeProject {
+public class EmployeeProjects {
 
     private final IntegerProperty projectId;
     private final IntegerProperty employeeId;
     private final StringProperty projectName;
     private final StringProperty departmentName;
 
-    public EmployeeProject(int projectId, int employeeId, String projectName, String departmentName) {
+    public EmployeeProjects(int projectId, int employeeId, String projectName, String departmentName) {
         this.projectId = new SimpleIntegerProperty(projectId);
         this.employeeId = new SimpleIntegerProperty(employeeId);
         this.projectName = new SimpleStringProperty(projectName);

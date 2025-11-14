@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -36,7 +37,7 @@ public abstract class AbstractView<T, C> extends VBox {
         button.setOnAction(e -> {
             Stage stage = new Stage();
             stage.setTitle(windowTitle);
-            stage.setScene(new Scene(newWindow.get(), 400, 300)); //used a supplier to delay the creation of a new window or else it would cause stack overflows. Once we set the scene from the event, then it gets called and created.
+            stage.setScene(new Scene(newWindow.get(), 600, 400)); //used a supplier to delay the creation of a new window or else it would cause stack overflows. Once we set the scene from the event, then it gets called and created.
             stage.show();
             closeCurrentWindowOnOpen(e);
         });

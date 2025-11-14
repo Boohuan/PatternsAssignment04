@@ -8,13 +8,11 @@ public class Projects {
     private final IntegerProperty id;
     private final StringProperty projectName;
     private final StringProperty description;
-    private final IntegerProperty departmentId;
 
-    public Projects(int id, String projectName, String description, int departmentId) {
+    public Projects(int id, String projectName, String description) {
         this.id = new SimpleIntegerProperty(id);
         this.projectName = new SimpleStringProperty(projectName);
         this.description = new SimpleStringProperty(description);
-        this.departmentId = new SimpleIntegerProperty(departmentId); //may need to remove this
     }
 
     public IntegerProperty idProperty() {
@@ -29,7 +27,4 @@ public class Projects {
         return description;
     }
 
-    public IntegerProperty departmentIdProperty() {
-        return departmentId;
-    }
 }

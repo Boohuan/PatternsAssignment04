@@ -6,6 +6,7 @@ import com.example.mvcapplication.controllers.EmployeeProjectController;
 import com.example.mvcapplication.controllers.ProjectController;
 import com.example.mvcapplication.models.Department;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import java.util.List;
 
@@ -26,7 +27,9 @@ public class DepartmentView extends AbstractView<Department, DepartmentControlle
         //go to employee projects table
         Button activeProj = navigation("Active Projects Table", "Employee Projects", () -> new EmployeeProjectView(new EmployeeProjectController()));
 
-        this.getChildren().addAll(tableView);
+        HBox navSection = new HBox(12, employee, projects, activeProj); //creates a sort of div like structure for the buttons
+
+        this.getChildren().addAll(tableView, navSection);
     }
 
     //keep here in case this goes wrong

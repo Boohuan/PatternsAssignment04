@@ -6,9 +6,7 @@ import com.example.mvcapplication.controllers.EmployeeProjectController;
 import com.example.mvcapplication.controllers.ProjectController;
 import com.example.mvcapplication.models.Employee;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 import java.util.List;
 
@@ -17,17 +15,14 @@ public class EmployeeView extends AbstractView<Employee, EmployeeController> {
     public EmployeeView(EmployeeController controller) {
         super(controller);
         createTable(List.of("First Name", "Last Name", "Salary"), List.of("firstName", "lastName", "salary"));
-
         //go to department table
         Button department = navigation("Department Table", "Departments", () -> new DepartmentView(new DepartmentController()));
-
         //go to projects table
         Button projects = navigation("Project Table", "Projects", () -> new ProjectsView(new ProjectController()));
-
         //go to employee projects table
         Button activeProj = navigation("Active Projects Table", "Employee Projects", () -> new EmployeeProjectView(new EmployeeProjectController()));
-
-        this.getChildren().addAll(createSearchBar(), tableView);
+        HBox navSection = new HBox(12, department, projects, activeProj); //creates a sort of div like structure for the buttons
+        this.getChildren().addAll(createSearchBar(), tableView, navSection);
     }
 
     private HBox createSearchBar() {
@@ -45,26 +40,4 @@ public class EmployeeView extends AbstractView<Employee, EmployeeController> {
         searchBox.getChildren().addAll(label, nameField, searchButton);
         return searchBox;
     }
-
-    /*private void createTable() {
-        tableView.getColumns().clear();
-
-        TableColumn<Employee, String> firstNameCol = new TableColumn<>("First Name");
-        firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-
-        TableColumn<Employee, String> lastNameCol = new TableColumn<>("Last Name");
-        lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-
-        TableColumn<Employee, Double> salaryCol = new TableColumn<>("Salary");
-        salaryCol.setCellValueFactory(new PropertyValueFactory<>("salary"));
-
-        TableColumn<Employee, Integer> departmentCol = new TableColumn<>("Department");
-        departmentCol.setCellValueFactory(new PropertyValueFactory<>("departmentId"));
-
-        tableView.getColumns().addAll(firstNameCol, lastNameCol, salaryCol, departmentCol);
-    }
-
-    private void bindTableData() {
-        tableView.setItems(controller.getEmployees());
-    }*/
 }

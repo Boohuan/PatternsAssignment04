@@ -1,7 +1,7 @@
 package com.example.mvcapplication.controllers;
 
 import com.example.mvcapplication.models.DatabaseManager;
-import com.example.mvcapplication.models.EmployeeProject;
+import com.example.mvcapplication.models.EmployeeProjects;
 import javafx.collections.ObservableList;
 
 public class EmployeeProjectController {
@@ -10,7 +10,7 @@ public class EmployeeProjectController {
 
     }
 
-    public ObservableList<EmployeeProject> getEmployeeProjects() {
+    public ObservableList<EmployeeProjects> getEmployeeProjects() {
         return DatabaseManager.getAllEmployeeProjects();
     }
 
