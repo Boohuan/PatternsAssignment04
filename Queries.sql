@@ -53,3 +53,17 @@ INSERT INTO Employee (First_Name, Last_Name, Salary, DepartmentId, ProjectID) VA
 ('Michael', 'Johnson', 80000.00, 3, 102),
 ('Emily', 'Davis', 72000.00, 4, 103),
 ('Daniel', 'Wilson', 68000.00, 5, 104);
+
+CREATE TABLE EmployeeProject (
+    EmployeeID INT,
+    ProjectID INT,
+    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID),
+    FOREIGN KEY (ProjectID) REFERENCES Projects(ProjectID)
+);
+
+INSERT INTO EmployeeProject VALUES
+(100, 100),
+(100, 101),
+(101, 102),
+(102, 101),
+(102, 100);

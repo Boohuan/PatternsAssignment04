@@ -1,8 +1,6 @@
 package com.example.mvcapplication.models;
 
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class EmployeeProjects {
 
@@ -18,19 +16,19 @@ public class EmployeeProjects {
         this.departmentName = new SimpleStringProperty(departmentName);
     }
 
-    public IntegerProperty projectIdProperty(){
+    public IntegerProperty projectIdProperty() {
         return projectId;
     }
 
-    public IntegerProperty employeeIdProperty(){
+    public IntegerProperty employeeIdProperty() {
         return employeeId;
     }
 
-    public StringProperty projectNameProperty(){
+    public StringProperty projectNameProperty() {
         return projectName;
     }
 
-    public StringProperty departmentNameProperty(){
+    public StringProperty departmentNameProperty() {
         return departmentName;
     }
 }

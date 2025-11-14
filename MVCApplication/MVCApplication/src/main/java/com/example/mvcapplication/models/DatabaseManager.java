@@ -1,6 +1,5 @@
 package com.example.mvcapplication.models;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,6 +13,7 @@ public class DatabaseManager {
 
     /**
      * Returns everything in the employee table
+     *
      * @return
      */
     public static ObservableList<Employee> getAllEmployees() {
@@ -42,6 +42,7 @@ public class DatabaseManager {
 
     /**
      * Returns the first name of every employee in the employee table
+     *
      * @param firstName
      * @return
      */
@@ -56,7 +57,7 @@ public class DatabaseManager {
 
             while (rs.next()) {
                 employees.add(new Employee(
-                        rs.getInt("EmployeeId"),
+                        rs.getInt("EmployeeID"),
                         rs.getString("First_Name"),
                         rs.getString("Last_Name"),
                         rs.getDouble("Salary"),
@@ -71,37 +72,18 @@ public class DatabaseManager {
     }
 
     /**
-     * Gets all employee last names from the employee table
-     * @param lastName
-     * @return
-     */
-    public static ObservableList<Employee> getEmployeeLastName(String lastName){
-        ObservableList<Employee> employees = FXCollections.observableArrayList();
-            String query = "SELECT * FROM employees WHERE Last_Name = '" + lastName + "'";
-            try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            Statement stat = conn.createStatement();
-            ResultSet set = stat.executeQuery(query)) {
-                while(set.next()) {
-                    employees.add(new Employee(set.getInt("EmployeeId"), set.getString("First_Name"), set.getString("Last_Name"), set.getDouble("Salary"), set.getInt("DepartmentId")));
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return employees;
-    }
-
-    /**
      * Returns all projects from the Project table
+     *
      * @return
      */
-    public static ObservableList<Projects> getAllProjects(){
+    public static ObservableList<Projects> getAllProjects() {
         ObservableList<Projects> projects = FXCollections.observableArrayList();
         String query = "SELECT * FROM projects";
-        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        Statement stat = conn.createStatement();
-        ResultSet set = stat.executeQuery(query)){
-            while(set.next()){
-                projects.add(new Projects(set.getInt("ProjectID"), set.getString("ProjectName"), set.getString("ProjectDescription"), set.getInt("departmentId")));
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement stat = conn.createStatement();
+             ResultSet set = stat.executeQuery(query)) {
+            while (set.next()) {
+                projects.add(new Projects(set.getInt("ProjectID"), set.getString("ProjectName"), set.getString("ProjectDescription")));
             }
         } catch (SQLException e) {
             e.printStackTrace(); //maybe add logger if time
@@ -111,18 +93,19 @@ public class DatabaseManager {
 
     /**
      * Return all departments from the Department table
+     *
      * @return
      */
-    public static ObservableList<Department> getAllDepartments(){
+    public static ObservableList<Department> getAllDepartments() {
         ObservableList<Department> departments = FXCollections.observableArrayList();
         String query = "SELECT * FROM department";
-        try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        Statement stat = conn.createStatement();
-        ResultSet set = stat.executeQuery(query)){
-            while(set.next()){
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement stat = conn.createStatement();
+             ResultSet set = stat.executeQuery(query)) {
+            while (set.next()) {
                 departments.add(new Department(set.getInt("DepartmentId"), set.getString("DepartmentName")));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return departments;
@@ -130,12 +113,16 @@ public class DatabaseManager {
 
     public static ObservableList<EmployeeProjects> getAllEmployeeProjects(){
         ObservableList<EmployeeProjects> employeeProjects = FXCollections.observableArrayList();
-        String query = "SELECT E.First_Name, E.Last_Name, E.Salary, P.ProjectName, P.ProjectDescription FROM Employee AS E INNER JOIN Projects AS P ON E.ProjectID = P.ProjectID;"; //fix
+        String query = "SELECT E.EmployeeID, E.ProjectID, P.ProjectName, D.DepartmentName " +
+                "FROM EmployeeProject EP " +
+                "JOIN Employee E ON EP.EmployeeID = E.EmployeeID " +
+                "JOIN Projects P ON EP.ProjectID = P.ProjectID " +
+                "JOIN Department D ON E.DepartmentID = D.DepartmentID";
         try(Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        Statement stat = conn.createStatement();
-        ResultSet set = stat.executeQuery(query)){
+            Statement stat = conn.createStatement();
+            ResultSet set = stat.executeQuery(query)){
             while(set.next()){
-                employeeProjects.add(new EmployeeProjects(set.getInt("ProjectID"), set.getInt("EmployeeId"), set.getString("ProjectName"), set.getString("DepartmentName")));
+                employeeProjects.add(new EmployeeProjects(set.getInt("ProjectID"), set.getInt("EmployeeID"), set.getString("ProjectName"), set.getString("DepartmentName")));
             }
         }catch(SQLException e){
             e.printStackTrace();
