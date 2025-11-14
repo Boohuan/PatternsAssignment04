@@ -5,6 +5,7 @@ import com.example.mvcapplication.controllers.EmployeeController;
 import com.example.mvcapplication.controllers.EmployeeProjectController;
 import com.example.mvcapplication.controllers.ProjectController;
 import com.example.mvcapplication.models.Employee;
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -15,16 +16,15 @@ public class EmployeeView extends AbstractView<Employee, EmployeeController> {
 
     public EmployeeView(EmployeeController controller) {
         super(controller);
-        createTable(List.of("First Name", "Last Name", "Salary"), List.of("firstName", "lastName", "salary"));
+        createTable(List.of("ID", "First Name", "Last Name", "Salary", "Department ID"), List.of("id", "firstName", "lastName", "salary", "departmentId"));
+        tableView.setItems(controller.getEmployees());
         //go to department table
         Button department = navigation("Department Table", "Departments", () -> new DepartmentView(new DepartmentController()));
         //go to projects table
         Button projects = navigation("Project Table", "Projects", () -> new ProjectsView(new ProjectController()));
         //go to employee projects table
         Button activeProj = navigation("Active Projects Table", "Employee Projects", () -> new EmployeeProjectView(new EmployeeProjectController()));
-        createTable();
-        bindTableData();
-        HBox navSection = new HBox(12, department, projects, activeProj); //creates a sort of div like structure for the buttons
+        HBox navSection = navButtons(department, projects, activeProj); //creates a sort of div like structure for the buttons
         this.getChildren().addAll(createSearchBar(), tableView, navSection);
     }
 
@@ -65,4 +65,5 @@ public class EmployeeView extends AbstractView<Employee, EmployeeController> {
         searchBox.getChildren().addAll(label, nameField, searchButton);
         return searchBox;
     }
+
 }

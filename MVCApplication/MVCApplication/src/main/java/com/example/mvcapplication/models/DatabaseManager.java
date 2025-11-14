@@ -48,9 +48,7 @@ public class DatabaseManager {
      */
     public static ObservableList<Employee> getEmployeeByFirstName(String firstName) {
         ObservableList<Employee> employees = FXCollections.observableArrayList();
-
         String query = "SELECT * FROM employee WHERE First_Name = '" + firstName + "'";
-
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
